@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<Title>Lambda</Title>
+		<!-- jquery -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- dr3 -->
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<!-- bootstrap -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<!-- ncbi seqviewer -->
+		<script type="text/javascript" src="https://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js"> </script>
+		<!-- lambda -->
+		<script type="text/javascript" src="lambda.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#canvas-tab" class="nav-link">Visual</a></li>
+				<li><a class="nav-link" data-toggle="tab" href="#lambda-seq-viewer-tab">NCBI SeqViewer</a></li>
+				<div id="speed-controls" style="margin-left: auto; margin-top: auto; margin-bottom: auto;">
+					Time:<span id="time"></span>
+					Speed:
+					<img src="images/Pause.png" class="speed-control" id="pause-button" speed="0">
+					<img src="images/Play.png" class="speed-control" id="play-button" speed="1">
+					<img src="images/Next.png" class="speed-control" id="ff-button" speed="2">
+				</div>
+			</ul>
+				<div class="tab-content">
+					<div id="lambda-seq-viewer-tab" class="tab-pane">
+						<div id="lambda-seq-viewer" class="SeqViewerApp" data-autoload> <a href="?embedded=true&appname=testapp1&id=NC_001416.1"></a> </div>
+					</div>
+				<div id="canvas-tab" class="tab-pane active container-fluid"><div class="row">
+					<div class="col" id="info-box">
+						<h1><u>Selected Object:</u> <span id="sel-obj-name"></span></h1>
+						<p id="sel-obj-description">
+						</p>
+						<h1><u>Event Log</u></h1>
+						<p id="event-log">
+							
+						</p>
+					</div>
+					<svg id="canvas" class="col-6">
+						<ellipse id="cell" name="E.coli Cell" class="lambda-element"></ellipse>
+						<path id="chromasome" name="Chromasome" class="lambda-element"></path>
+					</svg>
+					<div class="col" id="control-box">
+						<button onclick="add_phage()">Add Phage</button>
+						<h1><u>Gene Product</u></h1>
+						<div id="gene-products"></div>
+					</div>
+				</div></div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			$(window).on('resize', on_resize);
+			$(start_lambda);
+		</script>
+	</body>
+</html>

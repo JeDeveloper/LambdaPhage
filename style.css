@@ -1,0 +1,87 @@
+h1 {
+	font-size: 16pt;
+}
+
+h2 {
+	font-size: 16pt;
+	display: inline-block;
+}
+
+#speed-controls {
+	
+}
+
+.speed-control {
+	display: inline-block;
+	cursor: pointer;
+	width: 26pt;
+}
+
+#control-box {
+	border-left: 1px solid black;
+	margin: 1% 1% 1% 1%;
+	padding: 1% 1% 1% 1%;
+}
+
+#info-box {
+	border-right: 1px solid black;
+	margin: 1% 1% 1% 1%;
+	padding: 1% 1% 1% 1%;
+}
+
+#gene-products {
+	overflow-y: scroll;
+}
+
+#cell {
+	fill: none;
+	stroke: black;
+	stroke-width: 2px;
+}
+
+#chromasome {
+	stroke: black;
+	stroke-width: 1px;
+	fill: none;
+}
+
+.lambda-element {
+	cursor: pointer;
+}
+
+.gene-product {
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+.gene-product-slider {
+	margin-top: 1.5%;
+	width: 80%;
+	margin-left: auto;
+	display: inline-block;
+	float: right;
+}
+
+.speed-control {
+	display: inline-block;
+}
+
+/*Phage Capsid Stuff*/
+.phage-capsid-head {
+	fill:lime;
+	fill-opacity: 0.5;
+	stroke: green;
+	stroke-width: .1;
+}
+
+.phage-capsid-tail {
+	fill:lime;
+	stroke: green;
+	stroke-width: .1;
+}
+
+.lambda-genome {
+	fill: none;
+	stroke: green;
+	stroke-width: 1;
+}
