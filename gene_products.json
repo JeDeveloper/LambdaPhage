@@ -1,0 +1,65 @@
+{
+	"N": {
+		short: "",
+		long: "",
+		locus_tag: "lambdap49",
+	},
+	"O": {
+		short: "",
+		long: "",
+		locus_tag: "lambdap89",
+	},
+	"P": {
+		short: "DNA replication protein",
+		long: "",
+		locus_tag: "lambdap61",
+	},
+	"Q": {
+		short: "antitermination protein",
+		long: "Q loads onto RNA polymerase at qut (Q utilization site) and prevents termination at a downstream terminator.",
+		locus_tag: "lambdap71",
+	},
+	"CI": {
+		short: "repressor",
+		long: "",
+		locus_tag: "lambdap88",
+	},
+	"CII": {
+		short: "lysogeny transcription activator",
+		long: "",
+		locus_tag: "lambdap59",
+	},
+	"CIII": {
+		short: "CII stabilizer",
+		long: "",
+		locus_tag: "lambdap86",
+	},
+	"Cro":
+	{
+		short: "repressor of CI synthesis",
+		long: "",
+		locus_tag: "lambdap57",
+	},
+	"Gam":
+	{
+		short: "recBCD inhibitor",
+		long: "The cellular exonuclease recBCD will chew up the ends of linear double-stranded DNA during rolling cycle replication, so lambda makes Gam, which binds to recBCD and inhibits its activity.",
+		locus_tag: "lambdap42",
+	},
+	"int":
+	{
+		short: "integrase",
+		long: "", 
+		locus_tag: "lambdap33",
+	},
+	"xis": {
+		short: "excisease and dirctionality factor",
+		long: "",
+		locus_tag: "lambdap31",
+	},
+	"ral": {
+		short: "",
+		long: "",
+		locus_tag: "lambdap46",
+	}
+}

@@ -149,13 +149,13 @@ var lambda_gene_products = {
 
 var cellular_enzymes = {
 	'rnap': {
-		start_level = 2.5
-	}
+		start_level: 2.5
+	},
 	'dnap': {
-		start_level =
-	}
-	'recBCD' {
-		start_level = 
+		start_level: 0.1 // made up number
+	},
+	'recBCD': {
+		start_level: 0
 	}
 }
 
@@ -171,10 +171,10 @@ var phage_genomes = [];
 var phage_speed = 0.25;
 
 function start_lambda() {
-	lambda_gene_products.values().map(function(k){k.level=0;});
-	cellular_enzymes.values().map(function(k){k.level=k.start_level;});
+	Object.keys(lambda_gene_products).map(function(k){lambda_gene_products[k].level=0;});
+	Object.keys(cellular_enzymes).map(function(k){cellular_enzymes[k].level=cellular_enzymes[k].start_level;});
 	lambda_product_sliders = d3.select('#gene-products').selectAll()
-		.data(Object.keys(lambda_gene_products) + Object.keys(cellular_enzymes)).enter()
+		.data(Object.keys(lambda_gene_products).concat(Object.keys(cellular_enzymes))).enter()
 			.append("div")
 				.attr("class", 'gene-product')
 				.attr("name", function(d){return d;});
@@ -379,7 +379,8 @@ function draw_lambda_phage(point)
 	var inner_translate = 'translate(' + (-scale(4)) + ' ' + (-scale(baseplate_y * capsid_scale)) + ') scale(' + capsid_scale + ' ' + capsid_scale + ')'
 	
 	var genome = d3.select("#canvas").append('path')
-		.attr('class', 'lambda-genome')
+		.classed('lambda-genome', true)
+		.classed('capsid', true)
 		.attr('name', 'Genome')
 		.attr('d', draw_phage_genome(4, -baseplate_y, d3.scaleLinear().domain([0,8]).range([0, 8 * capsid_scale]), 'capsid', 2));
 	phage_g.attr('transform', inner_translate);
@@ -394,7 +395,7 @@ function draw_phage_genome(x, y, gscale, form, num_curves)
 	{
 		var len = gscale.domain()[1] * .8;
 		var genome_path = d3.path();
-		y = y + gscale.domain()[1] * .1;
+		// y = y + gscale.domain()[1] * .1;
 		genome_path.moveTo(scale(gscale(x)), scale(gscale(y)));
 		for (var i = 0; i < num_curves; i++){
 			this_pt = gscale((y + (i + 1) * len / num_curves));
@@ -407,7 +408,7 @@ function draw_phage_genome(x, y, gscale, form, num_curves)
 	{
 		var len = gscale.domain()[1] * .8;
 		var genome_path = d3.path();
-		y = y + gscale.domain()[1] * .1;
+		// y = y + gscale.domain()[1] * .1;
 		genome_path.moveTo(scale(gscale(x)), scale(gscale(y)));
 		for (var i = 0; i < num_curves; i++){
 			this_pt = gscale((y + (i + 1) * len / num_curves));
@@ -442,7 +443,7 @@ function step() {
 	var dsteps = (new Date().getTime() - last_step_time) * speed;
 	var cell_center = {x: scale.invert($('#cell').attr('cx')), y: scale.invert($('#cell').attr('cy'))};
 	var cell_axes = {
-			x: scale.invert($('#cell').attr('rx'))
+			x: scale.invert($('#cell').attr('rx')),
 			y: scale.invert($('#cell').attr('ry'))
 		};
 	d3.selectAll('.phage-capsid').data(phage_locations).transition()
@@ -469,31 +470,26 @@ function step() {
 			}
 			return "translate(" + scale(d.x) + " " + scale(d.y) + ") rotate(" + (-theta * 360 / (Math.PI * 2) + 90) + ")";
 		});
-	d3.selectAll('.lambda-genome .capsid').data(phage_genomes.filter(g => !g.landed)).transition()
-		.duration(100)
+	var notlanded = d3.selectAll('.lambda-genome.capsid').data(phage_genomes.filter(g => !g.landed));
+	notlanded.transition().duration(100)
 		.attr('transform', function(d, i){
-\			phage_location = phage_locations[d.parent_location_index]
-			var theta = -Math.atan2(phage_location.y - cell_center.y, phage_location.x - cell_center.x);
-			return "translate(" + scale(phage_location.x) + " " + scale(phage_location.y) + ") rotate(" + (-theta * 360 / (Math.PI * 2) + 90) + ")";
+			return $($(".phage-capsid").get(d.parent_location_index)).attr('transform')
+;
 		})
 		.attr('d', function(d, i) {
 			return $(this).attr('d');
-		})
-		.classed('capsid', function(d, i){
-			return !d.landed;
 		});
-	d3.selectAll('.lambda-genome .landed').data(phage_genomes.filter(g => g.landed && !g.cytosol).transition()
-		.duration(500)
+	var landed = d3.selectAll('.lambda-genome.landed').data(phage_genomes.filter(g => g.landed && !g.cytosol))
+	landed.enter().classed('cytosol', true);
+	landed.transition().duration(500)
 		.attr('transform', function(d, i){
-			return "translate(" + scale(phage_location.x) + " " + scale(phage_location.y) + ") rotate(" + (-theta * 360 / (Math.PI * 2) + 90) + ")";
-		})
+			return $(".phage-capsid").get(d.parent_location_index).attr('transform');		})
 		.attr('d', function(d){
 			d.cytosol = true;
 			append_log('DNA Ejection');
 			return draw_phage_genome(4, 4, d3.scaleLinear().domain([0,8]).range([0, 64]), 'linear', 2);
-		})
-		.classed('cytosol', true);
-	d3.selectAll('.lambda-genome .cytosol').data(phage_genomes.filter(g => g.cytosol))
+		});
+	d3.selectAll('.lambda-genome.cytosol').data(phage_genomes.filter(g => g.cytosol)).transition()
 		.duration(500)
 		.attr('transform', function(d, i)
 		{
@@ -503,7 +499,7 @@ function step() {
 
 		})
 		.attr('d', function(d, i){
-			return draw_phage_genome(4, 4, d3.scaleLinear().domain([0,8]).range([0, 64]), 'circular'
+			return draw_phage_genome(4, 4, d3.scaleLinear().domain([0,8]).range([0, 64]), 'circular');
 		});
 
 	last_step_time = new Date().getTime();
