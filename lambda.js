@@ -387,6 +387,12 @@ function draw_lambda_phage(point)
 	var rotation = Math.atan2(point.y - scale.invert($('#cell').attr('cy')), point.x - scale.invert($('#cell').attr('cx'))) * 360 / (2 * Math.PI) + 90;
 	genome.attr('transform', "translate(" + scale(point.x) + "  " + scale(point.y) + ") rotate(" + rotation + ")");
 	phage_outer.attr('transform', "translate(" + scale(point.x) + "  " + scale(point.y) + ") rotate(" + rotation + ")");
+	//draw path
+	var linedata = {
+		source: {
+			
+		}
+	};
 }
 
 function draw_phage_genome(x, y, gscale, form, num_curves)
